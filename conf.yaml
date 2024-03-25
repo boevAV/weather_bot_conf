@@ -5,10 +5,6 @@ description: Deploy one instance
 parameters:
   key_name:
     type: string
-  image_id:
-    type: string
-  flavor:
-    type: string
   network_name:
     type: string
   floating_network_name:
@@ -33,29 +29,19 @@ resources:
           port_range_min: 22 
           port_range_max: 22
 
-  boeva_instance:
+  instance_1:
     type: OS::Nova::Server
     properties:
       key_name: { get_param: key_name }
-      image: { get_param: image_id }
-      flavor: { get_param: flavor }
+      image: ubuntu-22.04
+      flavor: m1.small
       networks:
-        - port: { get_resource: server_port }
-
-  server_port:
+      - port: { get_resource: server_1_port }
+  
+  server_1_port:
     type: OS::Neutron::Port
     properties:
       network_id: { get_param: network_name }
       security_groups:
+        - default
         - { get_resource: web_secgroup }
-
-  server_floating_ip:
-    type: OS::Neutron::FloatingIP
-    properties:
-      floating_network: { get_param: floating_network_name }
-      
-  association:
-    type: OS::Neutron::FloatingIPAssociation
-    properties:
-      floatingip_id: { get_resource: server_floating_ip }
-      port_id: { get_resource: server_port }
