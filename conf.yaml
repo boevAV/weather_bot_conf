@@ -1,5 +1,7 @@
 heat_template_version: '2015-04-30'
 
+description: Deploy one instance
+
 parameters:
   key_name:
     type: string
