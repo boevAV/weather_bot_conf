@@ -7,8 +7,6 @@ parameters:
     type: string
   network_name:
     type: string
-  floating_network_name:
-    type: string
 
 resources:
 
