@@ -26,14 +26,6 @@ resources:
           remote_ip_prefix: 0.0.0.0/0
           port_range_min: 22 
           port_range_max: 22
-
-  java_installation:
-    type: OS::Heat::CloudConfig
-    properties:
-      cloud_config:
-        packages:
-          - default-jre
-          - default-jdk
   
   instance_1:
     type: OS::Nova::Server
@@ -43,6 +35,16 @@ resources:
       flavor: m1.small
       networks:
       - port: { get_resource: server_1_port }
+      user_data:
+        str_replace:
+          template: |
+            #!/bin/bash
+            sudo apt update
+            sudo apt install openjdk-17-jdk
+            sudo apt install default-17-jre
+            java -version
+          params:
+            "$": "$"
   
   server_1_port:
     type: OS::Neutron::Port
