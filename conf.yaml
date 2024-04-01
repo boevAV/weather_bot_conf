@@ -27,6 +27,14 @@ resources:
           port_range_min: 22 
           port_range_max: 22
 
+  java_installation:
+    type: OS::Heat::CloudConfig
+    properties:
+      cloud_config:
+        packages:
+          - default-jre
+          - default-jdk
+  
   instance_1:
     type: OS::Nova::Server
     properties:
