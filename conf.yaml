@@ -35,16 +35,6 @@ resources:
       flavor: m1.small
       networks:
       - port: { get_resource: server_1_port }
-      user_data:
-        str_replace:
-          template: |
-            echo "Updating packages..."
-            sudo apt update
-            echo "Installing Java..."
-            sudo apt install openjdk-17-jre-headless -y
-            echo "Java installed successfully."
-          params:
-            "$": "$"
   
   server_1_port:
     type: OS::Neutron::Port
