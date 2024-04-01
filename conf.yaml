@@ -38,11 +38,11 @@ resources:
       user_data:
         str_replace:
           template: |
-            #!/bin/bash
+            echo "Updating packages..."
             sudo apt update
-            sudo apt install openjdk-17-jdk
-            sudo apt install default-17-jre
-            java -version
+            echo "Installing Java..."
+            sudo apt install openjdk-17-jre-headless -y
+            echo "Java installed successfully."
           params:
             "$": "$"
   
